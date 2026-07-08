@@ -1,4 +1,5 @@
 import Navbar from "@/components/navbar";
+import About from "@/components/about";
 
 export default function Home() {
   return (
@@ -38,13 +39,13 @@ export default function Home() {
               <br />
               PERFORM BETTER,
               <br />
-              <span className="text-brand">LIVE BETTER</span>
+              <span className="text-brand">LIVE BETTER.</span>
             </h1>
           </div>
         </section>
 
-        {/* Temporary scroll test area — replaced by more sections later */}
-        <section className="min-h-[200vh] bg-zinc-950" />
+        {/* Hakkımda */}
+        <About />
       </main>
     </>
   );
