@@ -48,6 +48,15 @@ export default function Process() {
     },
   };
 
+  const line: Variants = {
+    hidden: { scaleX: reduceMotion ? 1 : 0, opacity: reduceMotion ? 1 : 0 },
+    show: {
+      scaleX: 1,
+      opacity: 1,
+      transition: { duration: 1, ease: [0.22, 1, 0.36, 1] },
+    },
+  };
+
   return (
     <section
       id="process"
@@ -62,12 +71,18 @@ export default function Process() {
           viewport={{ once: true, amount: 0.5 }}
           className="mb-14 text-center md:mb-20"
         >
-          <div className="flex items-center justify-center gap-3 text-brand">
-            <span className="h-px w-8 bg-brand" />
+          <div className="flex items-center justify-center gap-4 text-brand">
+            <motion.span
+              variants={line}
+              className="h-px w-20 origin-right bg-gradient-to-r from-transparent to-brand md:w-36"
+            />
             <span className="text-sm font-semibold uppercase tracking-[0.2em]">
               Süreç
             </span>
-            <span className="h-px w-8 bg-brand" />
+            <motion.span
+              variants={line}
+              className="h-px w-20 origin-left bg-gradient-to-r from-brand to-transparent md:w-36"
+            />
           </div>
           <h2 className="mt-4 font-heading text-4xl tracking-wide text-white md:text-6xl">
             SÜREÇ NASIL İŞLER?

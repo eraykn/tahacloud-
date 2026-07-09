@@ -3,6 +3,7 @@ import About from "@/components/about";
 import Quote from "@/components/quote";
 import Process from "@/components/process";
 import Stats from "@/components/stats";
+import Transformations from "@/components/transformations";
 
 export default function Home() {
   return (
@@ -58,6 +59,9 @@ export default function Home() {
 
         {/* İstatistikler */}
         <Stats />
+
+        {/* Dönüşümler */}
+        <Transformations />
       </main>
     </>
   );

@@ -50,14 +50,18 @@ export default function Stats() {
             variants={item}
             className="rounded-2xl border border-white/10 bg-white/[0.03] p-6 text-center transition-colors duration-300 hover:border-brand/40 hover:bg-white/[0.06]"
           >
-            <div className="flex items-baseline justify-center font-heading text-4xl leading-none text-brand md:text-5xl">
+            <div className="flex items-center justify-center gap-0.5 font-heading text-4xl leading-none text-brand md:text-5xl">
               <NumberTicker
                 value={s.value}
                 decimalPlaces={s.decimals ?? 0}
                 className="text-brand"
               />
               {s.suffix && <span>{s.suffix}</span>}
-              {s.emoji && <span className="ml-1.5 text-2xl">{s.emoji}</span>}
+              {s.emoji && (
+                <span className="ml-1 text-3xl leading-none md:text-4xl">
+                  {s.emoji}
+                </span>
+              )}
             </div>
             <p className="mt-3 text-xs font-semibold uppercase tracking-[0.15em] text-white/55 md:text-sm">
               {s.label}
