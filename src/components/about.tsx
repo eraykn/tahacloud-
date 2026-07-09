@@ -104,7 +104,7 @@ export default function About() {
           {/* Faint divider */}
           <motion.div
             variants={item}
-            className="mt-6 h-px w-full max-w-md bg-gradient-to-r from-white/25 via-white/10 to-transparent"
+            className="mt-6 h-px w-full max-w-md bg-gradient-to-r from-white/50 via-white/15 to-transparent"
           />
 
           {/* Description */}

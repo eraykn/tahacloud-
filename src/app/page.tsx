@@ -1,5 +1,8 @@
 import Navbar from "@/components/navbar";
 import About from "@/components/about";
+import Quote from "@/components/quote";
+import Process from "@/components/process";
+import Stats from "@/components/stats";
 
 export default function Home() {
   return (
@@ -46,6 +49,15 @@ export default function Home() {
 
         {/* Hakkımda */}
         <About />
+
+        {/* Alıntı */}
+        <Quote />
+
+        {/* Süreç */}
+        <Process />
+
+        {/* İstatistikler */}
+        <Stats />
       </main>
     </>
   );

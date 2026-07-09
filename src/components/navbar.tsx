@@ -15,7 +15,8 @@ import { cn } from "@/lib/utils";
 export const NAV_LINKS: { label: string; href: string }[] = [
   { label: "Ana Sayfa", href: "#home" },
   { label: "Hakkımda", href: "#about" },
-  { label: "Programlar", href: "#programs" },
+  { label: "Süreç", href: "#process" },
+  { label: "Dönüşümler", href: "#transformations" },
   { label: "İletişim", href: "#contact" },
 ];
 
@@ -46,6 +47,27 @@ export default function Navbar() {
       document.body.style.overflow = "";
     };
   }, [menuOpen]);
+
+  // Scroll-spy: highlight the nav link whose section crosses the viewport center.
+  useEffect(() => {
+    const sections = NAV_LINKS.map((l) =>
+      document.getElementById(l.href.slice(1)),
+    ).filter((el): el is HTMLElement => el !== null);
+    if (sections.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActiveHref("#" + entry.target.id);
+        }
+      },
+      // Thin band across the vertical center — the section over it is "active".
+      { rootMargin: "-45% 0px -45% 0px", threshold: 0 },
+    );
+
+    sections.forEach((s) => observer.observe(s));
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <>
