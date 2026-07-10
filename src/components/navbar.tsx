@@ -17,6 +17,7 @@ export const NAV_LINKS: { label: string; href: string }[] = [
   { label: "Hakkımda", href: "#about" },
   { label: "Süreç", href: "#process" },
   { label: "Dönüşümler", href: "#transformations" },
+  { label: "Programlar", href: "#programs" },
   { label: "İletişim", href: "#contact" },
 ];
 
@@ -156,8 +157,7 @@ export default function Navbar() {
           {/* Mobile hamburger */}
           <button
             type="button"
-            aria-label="Open menu"
-            aria-expanded={menuOpen}
+            aria-label={menuOpen ? "Menüyü kapat" : "Menüyü aç"}
             onClick={() => setMenuOpen(true)}
             className="text-white md:hidden"
           >

@@ -4,6 +4,10 @@ import Quote from "@/components/quote";
 import Process from "@/components/process";
 import Stats from "@/components/stats";
 import Transformations from "@/components/transformations";
+import Cta from "@/components/cta";
+import Packages from "@/components/packages";
+import Faq from "@/components/faq";
+import Footer from "@/components/footer";
 
 export default function Home() {
   return (
@@ -22,13 +26,6 @@ export default function Home() {
             playsInline
             preload="auto"
             className="absolute inset-0 h-full w-full object-cover"
-            style={{
-              position: "absolute",
-              inset: 0,
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-            }}
           >
             <source src="/vid/heroVidMain.mp4" type="video/mp4" />
           </video>
@@ -62,7 +59,19 @@ export default function Home() {
 
         {/* Dönüşümler */}
         <Transformations />
+
+        {/* CTA */}
+        <Cta />
+
+        {/* Programlar / Paketler */}
+        <Packages />
+
+        {/* S.S.S */}
+        <Faq />
       </main>
+
+      {/* Footer */}
+      <Footer />
     </>
   );
 }
