@@ -18,7 +18,7 @@ export const NAV_LINKS: { label: string; href: string }[] = [
   { label: "Süreç", href: "#process" },
   { label: "Dönüşümler", href: "#transformations" },
   { label: "Programlar", href: "#programs" },
-  { label: "İletişim", href: "#contact" },
+  { label: "S.S.S", href: "#contact" },
 ];
 
 export default function Navbar() {
