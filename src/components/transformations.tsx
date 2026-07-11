@@ -55,7 +55,7 @@ const TRANSFORMATIONS: Transformation[] = [
   },
 ];
 
-const AUTOPLAY_MS = 2000;
+const AUTOPLAY_MS = 2500;
 
 export default function Transformations() {
   const reduceMotion = useReducedMotion();
@@ -67,12 +67,13 @@ export default function Transformations() {
   const go = (dir: number) => setActive((a) => (a + dir + n) % n);
   const goto = (i: number) => setActive(((i % n) + n) % n);
 
-  // Auto-advance every 2s; pause on hover / reduced motion.
+  // Auto-advance: each slide stays exactly AUTOPLAY_MS (timer resets on every
+  // active change → uniform timing, resets after manual nav). Pauses on hover.
   useEffect(() => {
     if (reduceMotion || paused) return;
-    const id = setInterval(() => setActive((a) => (a + 1) % n), AUTOPLAY_MS);
-    return () => clearInterval(id);
-  }, [reduceMotion, paused, n]);
+    const id = setTimeout(() => setActive((a) => (a + 1) % n), AUTOPLAY_MS);
+    return () => clearTimeout(id);
+  }, [active, reduceMotion, paused, n]);
 
   const line: Variants = {
     hidden: { scaleX: reduceMotion ? 1 : 0, opacity: reduceMotion ? 1 : 0 },

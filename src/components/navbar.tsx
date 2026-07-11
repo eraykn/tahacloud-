@@ -18,7 +18,7 @@ export const NAV_LINKS: { label: string; href: string }[] = [
   { label: "Süreç", href: "#process" },
   { label: "Dönüşümler", href: "#transformations" },
   { label: "Programlar", href: "#programs" },
-  { label: "S.S.S", href: "#contact" },
+  { label: "S.S.S", href: "#faq" },
 ];
 
 export default function Navbar() {
@@ -146,9 +146,9 @@ export default function Navbar() {
             </ul>
 
             <a
-              href="#contact"
-              onClick={() => setActiveHref("#contact")}
-              className="rounded-full bg-brand px-5 py-2 text-sm font-semibold text-brand-foreground transition-transform hover:scale-105"
+              href="#programs"
+              onClick={() => setActiveHref("#programs")}
+              className="cursor-pointer rounded-full bg-brand px-5 py-2 text-sm font-semibold text-brand-foreground transition-transform hover:scale-105"
             >
               Başla
             </a>

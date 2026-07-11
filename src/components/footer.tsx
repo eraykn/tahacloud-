@@ -17,7 +17,7 @@ const MENU: { label: string; href: string }[] = [
 ];
 
 const LEGAL: { label: string; href: string }[] = [
-  { label: "Gizlilik Sözleşmesi", href: "#" },
+  { label: "Gizlilik Sözleşmesi", href: "/gizlilik-sozlesmesi" },
   { label: "KVKK Aydınlatma Metni", href: "#" },
   { label: "Mesafeli Satış Sözleşmesi", href: "#" },
   { label: "İptal & İade Politikası", href: "#" },

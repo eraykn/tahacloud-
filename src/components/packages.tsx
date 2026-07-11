@@ -12,16 +12,19 @@ type Term = { months: number; label: string; pct: number };
 
 const TERMS: Term[] = [
   { months: 1, label: "1 Ay", pct: 0 },
-  { months: 3, label: "3 Ay", pct: 10 },
-  { months: 6, label: "6 Ay", pct: 15 },
-  { months: 12, label: "12 Ay", pct: 20 },
+  { months: 3, label: "3 Ay", pct: 15 },
+  { months: 6, label: "6 Ay", pct: 20 },
+  { months: 12, label: "12 Ay", pct: 40 },
 ];
 
 type Package = {
   name: string;
   monthly: number;
   desc: string;
-  features: string[];
+  base: string[];
+  m3?: string[];
+  m6?: string[];
+  m12?: string[];
   highlight?: boolean;
 };
 
@@ -30,24 +33,31 @@ const PACKAGES: Package[] = [
     name: "Yüz Şekillendirme Paketi",
     monthly: 2490,
     desc: "Belirgin çene hattı, simetrik ve estetik yüz hatları için kişiye özel yüz egzersizleri ve beslenme planı.",
-    features: [
+    base: [
       "Kişiye özel yüz egzersiz programı",
       "Yüz hattı & simetri analizi",
       "Beslenme & su takibi",
-      "Haftalık ölçüm ve foto analizi",
       "24/7 WhatsApp destek",
     ],
+    m3: ["Haftalık ölçüm & foto analizi", "Aylık program güncellemesi"],
+    m6: ["Detaylı ilerleme raporu", "Cilt & bakım önerileri"],
+    m12: ["Aylık bire bir görüntülü görüşme", "Ömür boyu program erişimi"],
   },
   {
     name: "Yüz + Vücut Paketi",
     monthly: 3480,
     desc: "Hem yüz hatlarını hem de fiziğini aynı anda dönüştüren bütünsel premium program.",
-    features: [
+    base: [
       "Yüz Şekillendirme paketinin tamamı",
       "Vücut paketinin tamamı",
       "Bütünsel dönüşüm planı",
       "Öncelikli 24/7 destek",
-      "Aylık strateji görüşmesi",
+    ],
+    m3: ["Haftalık ölçüm & foto analizi", "Aylık strateji görüşmesi"],
+    m6: ["Detaylı ilerleme raporu", "Takviye & bakım önerileri"],
+    m12: [
+      "Aylık bire bir görüntülü görüşme",
+      "Ömür boyu erişim + VIP destek",
     ],
     highlight: true,
   },
@@ -55,17 +65,28 @@ const PACKAGES: Package[] = [
     name: "Vücut Paketi",
     monthly: 1990,
     desc: "Yağ yakımı, kas gelişimi ve estetik fizik için tamamen sana özel antrenman ve beslenme programı.",
-    features: [
+    base: [
       "Kişiye özel antrenman programı",
       "Hedefe yönelik beslenme planı",
       "Yağ yakımı & kas gelişim takibi",
-      "Haftalık ölçüm ve foto analizi",
       "24/7 WhatsApp destek",
     ],
+    m3: ["Haftalık ölçüm & foto analizi", "Takviye (supplement) önerileri"],
+    m6: ["Antrenman video kütüphanesi", "Aylık strateji görüşmesi"],
+    m12: ["Aylık bire bir görüntülü görüşme", "Sezonluk periyodizasyon planı"],
   },
 ];
 
 const fmt = (n: number) => new Intl.NumberFormat("tr-TR").format(n) + " ₺";
+
+function featuresFor(pkg: Package, months: number): string[] {
+  return [
+    ...pkg.base,
+    ...(months >= 3 ? pkg.m3 ?? [] : []),
+    ...(months >= 6 ? pkg.m6 ?? [] : []),
+    ...(months >= 12 ? pkg.m12 ?? [] : []),
+  ];
+}
 
 export default function Packages() {
   const reduceMotion = useReducedMotion();
@@ -126,8 +147,8 @@ export default function Packages() {
             SANA UYGUN PAKETİ SEÇ
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-base text-white/60 md:text-lg">
-            Ne kadar uzun taahhüt, o kadar avantaj. Daha uzun paketlerde daha
-            fazla indirim.
+            Ne kadar uzun taahhüt, o kadar avantaj: daha yüksek indirim ve daha
+            fazla özellik.
           </p>
         </motion.div>
 
@@ -142,7 +163,7 @@ export default function Packages() {
                   type="button"
                   onClick={() => setMonths(t.months)}
                   className={cn(
-                    "relative rounded-full px-4 py-2 text-sm font-semibold transition-colors md:px-6",
+                    "relative cursor-pointer rounded-full px-4 py-2 text-sm font-semibold transition-colors md:px-6",
                     activeTerm
                       ? "text-brand-foreground"
                       : "text-white/60 hover:text-white",
@@ -187,6 +208,7 @@ export default function Packages() {
           {PACKAGES.map((pkg) => {
             const base = pkg.monthly * term.months;
             const price = Math.round((base * (100 - term.pct)) / 100);
+            const features = featuresFor(pkg, term.months);
 
             return (
               <motion.article
@@ -226,15 +248,13 @@ export default function Packages() {
                     {fmt(price)}
                   </div>
                   <div className="mt-1 text-sm text-white/50">
-                    {term.months === 1
-                      ? "aylık"
-                      : `${term.months} ay toplam`}
+                    {term.months === 1 ? "aylık" : `${term.months} ay toplam`}
                   </div>
                 </div>
 
                 {/* Features */}
                 <ul className="mt-6 flex flex-col gap-3 border-t border-white/10 pt-6">
-                  {pkg.features.map((f) => (
+                  {features.map((f) => (
                     <li
                       key={f}
                       className="flex items-start gap-2.5 text-sm text-white/75"
@@ -250,13 +270,13 @@ export default function Packages() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={cn(
-                    "mt-8 inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold transition-all duration-300 hover:scale-[1.03]",
+                    "mt-8 inline-flex cursor-pointer items-center justify-center rounded-full px-6 py-3 text-sm font-semibold transition-all duration-300 hover:scale-[1.03]",
                     pkg.highlight
                       ? "bg-brand text-brand-foreground shadow-[0_0_40px_-12px] shadow-brand"
                       : "border border-white/20 text-white hover:border-brand hover:text-brand",
                   )}
                 >
-                  Paketi Seç
+                  Satın Al
                 </a>
               </motion.article>
             );

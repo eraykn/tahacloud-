@@ -84,8 +84,7 @@ export default function Faq() {
                 <button
                   type="button"
                   onClick={() => setOpen(isOpen ? null : i)}
-                  aria-expanded={isOpen}
-                  className="flex w-full items-center justify-between gap-4 py-5 text-left"
+                  className="flex w-full cursor-pointer items-center justify-between gap-4 py-5 text-left"
                 >
                   <span
                     className={cn(
