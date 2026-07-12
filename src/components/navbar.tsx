@@ -230,7 +230,7 @@ export default function Navbar() {
                 }}
               >
                 <a
-                  href="#contact"
+                  href="#programs"
                   onClick={() => setMenuOpen(false)}
                   className="mt-4 inline-block rounded-full bg-brand px-8 py-3 text-lg font-semibold text-brand-foreground"
                 >
