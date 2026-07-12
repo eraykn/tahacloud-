@@ -4,9 +4,7 @@ import { useState } from "react";
 import { motion, useReducedMotion, type Variants } from "motion/react";
 import { Check } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-const WHATSAPP =
-  "https://api.whatsapp.com/send/?phone=905413299480&text&type=phone_number&app_absent=0";
+import { SITE } from "@/lib/site";
 
 type Term = { months: number; label: string; pct: number };
 
@@ -266,7 +264,7 @@ export default function Packages() {
                 </ul>
 
                 <a
-                  href={WHATSAPP}
+                  href={SITE.whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={cn(

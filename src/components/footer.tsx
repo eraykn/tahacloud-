@@ -4,9 +4,7 @@ import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
 import { Mail, MapPin } from "lucide-react";
 import { SOCIALS, WhatsAppIcon } from "./social-icons";
-
-const WHATSAPP =
-  "https://api.whatsapp.com/send/?phone=905413299480&text&type=phone_number&app_absent=0";
+import { SITE } from "@/lib/site";
 
 const MENU: { label: string; href: string }[] = [
   { label: "Hakkımda", href: "#about" },
@@ -79,24 +77,24 @@ export default function Footer() {
         {/* Contact */}
         <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm text-white/50">
           <a
-            href="mailto:iletisim@tahacloud.com"
+            href={`mailto:${SITE.email}`}
             className="flex items-center gap-2 transition-colors hover:text-brand"
           >
             <Mail className="size-4 text-brand" />
-            iletisim@tahacloud.com
+            {SITE.email}
           </a>
           <a
-            href={WHATSAPP}
+            href={SITE.whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center gap-2 transition-colors hover:text-brand"
           >
             <WhatsAppIcon className="size-4 text-brand" />
-            +90 541 329 94 80
+            {SITE.phoneDisplay}
           </a>
           <span className="flex items-center gap-2">
             <MapPin className="size-4 text-brand" />
-            İstanbul, Türkiye
+            {SITE.location}
           </span>
         </div>
       </div>
@@ -119,7 +117,7 @@ export default function Footer() {
 
           <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
             <p className="text-xs text-white/40">
-              © {year} tahacloud coaching. Tüm hakları saklıdır.
+              © {year} {SITE.brand}. Tüm hakları saklıdır.
             </p>
             <p className="text-xs text-white/30">
               made by{" "}

@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import SmoothScroll from "@/components/smooth-scroll";
 import WhatsappFloat from "@/components/whatsapp-float";
+import { SITE } from "@/lib/site";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -24,8 +25,8 @@ const bebasNeue = Bebas_Neue({
 });
 
 export const metadata: Metadata = {
-  title: "tahacloud",
-  description: "Premium fitness & coaching — train like it matters.",
+  title: SITE.name,
+  description: SITE.description,
 };
 
 export default function RootLayout({

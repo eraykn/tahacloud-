@@ -2,16 +2,14 @@
 
 import { motion, useReducedMotion } from "motion/react";
 import { WhatsAppIcon } from "./social-icons";
-
-const WHATSAPP =
-  "https://api.whatsapp.com/send/?phone=905413299480&text&type=phone_number&app_absent=0";
+import { SITE } from "@/lib/site";
 
 export default function WhatsappFloat() {
   const reduceMotion = useReducedMotion();
 
   return (
     <motion.a
-      href={WHATSAPP}
+      href={SITE.whatsappUrl}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="WhatsApp ile iletişime geç"

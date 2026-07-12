@@ -1,30 +1,15 @@
 import type React from "react";
+import { SITE } from "@/lib/site";
 
 export const SOCIALS: {
   label: string;
   href: string;
   icon: React.ComponentType<{ className?: string }>;
 }[] = [
-  {
-    label: "Instagram",
-    href: "https://www.instagram.com/tahacloud/",
-    icon: InstagramIcon,
-  },
-  {
-    label: "TikTok",
-    href: "https://www.tiktok.com/@tahabcloud",
-    icon: TikTokIcon,
-  },
-  {
-    label: "YouTube",
-    href: "https://www.youtube.com/@tahacloud",
-    icon: YouTubeIcon,
-  },
-  {
-    label: "WhatsApp",
-    href: "https://api.whatsapp.com/send/?phone=905413299480&text&type=phone_number&app_absent=0",
-    icon: WhatsAppIcon,
-  },
+  { label: "Instagram", href: SITE.socials.instagram, icon: InstagramIcon },
+  { label: "TikTok", href: SITE.socials.tiktok, icon: TikTokIcon },
+  { label: "YouTube", href: SITE.socials.youtube, icon: YouTubeIcon },
+  { label: "WhatsApp", href: SITE.whatsappUrl, icon: WhatsAppIcon },
 ];
 
 export function InstagramIcon({ className }: { className?: string }) {
