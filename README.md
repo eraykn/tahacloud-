@@ -26,9 +26,13 @@ src/
     layout.tsx              # Kök layout: fontlar, smooth scroll, WhatsApp float
     page.tsx                # Tek sayfa: Hero → Hakkımda → Süreç → İstatistik →
                             # Dönüşümler → CTA → Paketler → SSS → Footer
-    gizlilik-sozlesmesi/    # Gizlilik sözleşmesi sayfası
+    gizlilik-sozlesmesi/          # Gizlilik sözleşmesi
+    kvkk-aydinlatma-metni/        # KVKK aydınlatma metni
+    mesafeli-satis-sozlesmesi/    # Mesafeli satış sözleşmesi
+    iptal-iade-politikasi/        # İptal & iade politikası (cayma hakkı istisnası)
     icon.png, apple-icon.png, favicon.ico  # Marka logosu (Next dosya konvansiyonu)
   components/               # Bölüm bileşenleri (navbar, packages, faq, ...)
+    legal-page.tsx           # Yasal sayfalar için ortak şablon (başlık/bölüm/iletişim kutusu)
   lib/
     site.ts                 # Merkezi site konfigürasyonu: marka, iletişim, sosyal linkler
     utils.ts                # cn() yardımcı fonksiyonu
@@ -46,17 +50,17 @@ public/
 - **Taahhüt bazlı fiyatlandırma:** 1/3/6/12 aylık dönem seçici; indirim yüzdesi ve döneme göre açılan ek özellikler (`featuresFor`) veri olarak tanımlı — UI otomatik türetilir.
 - **Tema token'ları:** Marka rengi (`--brand`, asit yeşili) ve tüm palet oklch olarak `globals.css` içinde; Tailwind v4 `@theme` ile utility'lere (`text-brand` vb.) map edilir.
 - **App icon konvansiyonu:** `app/icon.png`, `app/apple-icon.png`, `app/favicon.ico` marka logosundan üretildi; Next `<head>` etiketlerini otomatik ekler.
+- **Ortak yasal sayfa şablonu (`src/components/legal-page.tsx`):** Gizlilik, KVKK, mesafeli satış ve iptal/iade sayfaları aynı `LegalPage` bileşenini kullanır (başlık, İçindekiler, madde/liste/tanım/alt-madde render'ı, iletişim kutusu, footer); her sayfa yalnızca kendi içerik verisini tanımlar.
 
 ## Güvenlik notları
 
 - Statik site; kullanıcı girdisi işlenmez, `dangerouslySetInnerHTML` / `eval` yok, gizli anahtar (env secret) yok.
 - Tüm dış linkler (`target="_blank"`) `rel="noopener noreferrer"` taşır.
 - `npm audit`: 2 orta seviye bulgu — Next.js'in kendi içine gömdüğü `postcss < 8.5.10` (build zamanı bağımlılığı, statik sitede sömürülebilir değil). Next yamalı sürüm yayınlayınca `next` güncellenmeli.
-- Üretim ortamına alırken host/CDN katmanında güvenlik başlıkları önerilir: `Strict-Transport-Security`, `X-Content-Type-Options: nosniff`, `Referrer-Policy`, `frame-ancestors` (CSP).
+- Güvenlik başlıkları `next.config.ts` → `headers()` içinde tanımlı: `Strict-Transport-Security`, `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`, `Referrer-Policy`, `Permissions-Policy`. Host/CDN katmanı bunları override etmemeli.
 
 ## Bilinen eksikler / yapılacaklar
 
-- Footer'daki **KVKK Aydınlatma Metni, Mesafeli Satış Sözleşmesi, İptal & İade Politikası** linkleri placeholder (`#`). ikas geçişi öncesi gerçek metinler eklenmeli (e-ticarette yasal zorunluluk).
 - Dönüşüm kartlarındaki isim ve yorumlar placeholder — gerçek danışan izinli içerikle değiştirilecek.
 - OpenGraph / sosyal paylaşım görseli (`opengraph-image`) henüz yok.
 
