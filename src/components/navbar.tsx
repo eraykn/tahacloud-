@@ -20,7 +20,7 @@ export const NAV_LINKS: { label: string; href: string }[] = [
   { label: "Dönüşümler", href: "#transformations" },
   { label: "Programlar", href: "#programs" },
   { label: "S.S.S", href: "#faq" },
-];
+]; 
 
 export default function Navbar() {
   // `compact` = shrink to the dense, blurred state.

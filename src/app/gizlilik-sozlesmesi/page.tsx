@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, Mail } from "lucide-react";
 import { SITE } from "@/lib/site";
+import Footer from "@/components/footer";
 
 export const metadata: Metadata = {
   title: "Gizlilik Sözleşmesi — tahacloud",
@@ -154,6 +155,7 @@ export default function GizlilikSozlesmesiPage() {
           </a>
         </div>
       </div>
+      <Footer />
     </main>
   );
 }

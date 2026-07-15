@@ -7,18 +7,18 @@ import { SOCIALS, WhatsAppIcon } from "./social-icons";
 import { SITE } from "@/lib/site";
 
 const MENU: { label: string; href: string }[] = [
-  { label: "Hakkımda", href: "#about" },
-  { label: "Süreç", href: "#process" },
-  { label: "Dönüşümler", href: "#transformations" },
-  { label: "Programlar", href: "#programs" },
-  { label: "S.S.S", href: "#faq" },
+  { label: "Hakkımda", href: "/#about" },
+  { label: "Süreç", href: "/#process" },
+  { label: "Dönüşümler", href: "/#transformations" },
+  { label: "Programlar", href: "/#programs" },
+  { label: "S.S.S", href: "/#faq" },
 ];
 
 const LEGAL: { label: string; href: string }[] = [
   { label: "Gizlilik Sözleşmesi", href: "/gizlilik-sozlesmesi" },
   { label: "KVKK Aydınlatma Metni", href: "/kvkk-aydinlatma-metni" },
-  { label: "Mesafeli Satış Sözleşmesi", href: "#" },
-  { label: "İptal & İade Politikası", href: "#" },
+  { label: "Mesafeli Satış Sözleşmesi", href: "/mesafeli-satis-sozlesmesi" },
+  { label: "İptal & İade Politikası", href: "/iptal-iade-politikasi" },
 ];
 
 export default function Footer() {
