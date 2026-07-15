@@ -10,6 +10,7 @@ import {
   useReducedMotion,
 } from "motion/react";
 import { Menu, X } from "lucide-react";
+import { useLenis } from "lenis/react";
 import { cn } from "@/lib/utils";
 
 export const NAV_LINKS: { label: string; href: string }[] = [
@@ -28,6 +29,14 @@ export default function Navbar() {
   const [activeHref, setActiveHref] = useState("#home");
   const reduceMotion = useReducedMotion();
   const { scrollY } = useScroll();
+  const lenis = useLenis();
+
+  // Smooth-scroll to a section on nav click instead of the browser's instant jump.
+  const goTo = (href: string) => {
+    setActiveHref(href);
+    setMenuOpen(false);
+    lenis?.scrollTo(href, { offset: -80 });
+  };
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() ?? 0;
@@ -93,7 +102,10 @@ export default function Navbar() {
           <a
             href="#home"
             aria-label="tahacloud — Anasayfa"
-            onClick={() => setActiveHref("#home")}
+            onClick={(e) => {
+              e.preventDefault();
+              goTo("#home");
+            }}
             className="flex items-center"
           >
             <motion.div
@@ -126,7 +138,10 @@ export default function Navbar() {
                   <li key={link.href}>
                     <a
                       href={link.href}
-                      onClick={() => setActiveHref(link.href)}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        goTo(link.href);
+                      }}
                       className={cn(
                         "group relative text-sm font-bold uppercase tracking-wide transition-colors",
                         active ? "text-brand" : "text-white/85 hover:text-brand",
@@ -147,7 +162,10 @@ export default function Navbar() {
 
             <a
               href="#programs"
-              onClick={() => setActiveHref("#programs")}
+              onClick={(e) => {
+                e.preventDefault();
+                goTo("#programs");
+              }}
               className="cursor-pointer rounded-full bg-brand px-5 py-2 text-sm font-semibold text-brand-foreground transition-transform hover:scale-105"
             >
               Başla
@@ -216,7 +234,10 @@ export default function Navbar() {
                 >
                   <a
                     href={link.href}
-                    onClick={() => setMenuOpen(false)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      goTo(link.href);
+                    }}
                     className="font-heading text-4xl tracking-wide text-white transition-colors hover:text-brand"
                   >
                     {link.label}
@@ -231,7 +252,10 @@ export default function Navbar() {
               >
                 <a
                   href="#programs"
-                  onClick={() => setMenuOpen(false)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    goTo("#programs");
+                  }}
                   className="mt-4 inline-block rounded-full bg-brand px-8 py-3 text-lg font-semibold text-brand-foreground"
                 >
                   Başla

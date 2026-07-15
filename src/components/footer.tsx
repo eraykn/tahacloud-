@@ -16,7 +16,7 @@ const MENU: { label: string; href: string }[] = [
 
 const LEGAL: { label: string; href: string }[] = [
   { label: "Gizlilik Sözleşmesi", href: "/gizlilik-sozlesmesi" },
-  { label: "KVKK Aydınlatma Metni", href: "#" },
+  { label: "KVKK Aydınlatma Metni", href: "/kvkk-aydinlatma-metni" },
   { label: "Mesafeli Satış Sözleşmesi", href: "#" },
   { label: "İptal & İade Politikası", href: "#" },
 ];
@@ -122,7 +122,9 @@ export default function Footer() {
             <p className="text-xs text-white/30">
               made by{" "}
               <motion.a
-                href="#"
+                href="https://github.com/eraykn"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="bg-gradient-to-r from-white/40 via-brand to-white/40 bg-[length:200%_auto] bg-clip-text font-semibold text-transparent"
                 animate={
                   reduceMotion

@@ -12,7 +12,7 @@ const TERMS: Term[] = [
   { months: 1, label: "1 Ay", pct: 0 },
   { months: 3, label: "3 Ay", pct: 15 },
   { months: 6, label: "6 Ay", pct: 20 },
-  { months: 12, label: "12 Ay", pct: 40 },
+  { months: 12, label: "12 Ay", pct: 30 },
 ];
 
 type Package = {
