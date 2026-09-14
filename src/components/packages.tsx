@@ -15,14 +15,38 @@ const TERMS: Term[] = [
   { months: 12, label: "12 Ay", pct: 30 },
 ];
 
+/** Kademeli ödüllerin açıldığı taahhüt süreleri — artan sırada. */
+const LADDER_TERMS = [3, 6, 12] as const;
+type LadderTerm = (typeof LADDER_TERMS)[number];
+
+/**
+ * Taahhüt uzadıkça açılan ortak ödüller. Her kademe yeni bir eksen açar:
+ * 3 ay adaptasyon, 6 ay kalıcı varlık, 12 ay güvence ve ayrıcalık.
+ * Tek kaynak olduğu için paketler arası tutarsızlık imkânsız.
+ */
+const LADDER: Record<LadderTerm, string[]> = {
+  3: ["Haftalık foto & ölçüm analizi", "2 haftada bir program güncellemesi"],
+  6: [
+    "Egzersiz video kütüphanesi (kalıcı erişim)",
+    "Detaylı ilerleme raporu",
+  ],
+  12: [
+    "Yılda 2 ay program dondurma hakkı",
+    "Öncelikli yanıt hattı (mesai içi ≤2 saat)",
+    "Tüm program arşivi kalıcı senin",
+    "Sezonluk periyodizasyon planı",
+  ],
+};
+
 type Package = {
   name: string;
   monthly: number;
   desc: string;
   base: string[];
-  m3?: string[];
-  m6?: string[];
-  m12?: string[];
+  /** Pakete özel, kademeye bağlı ek ayrıcalıklar. */
+  perks?: Partial<Record<LadderTerm, string[]>>;
+  /** Paketleri ayrı ayrı almanın aylık toplamı — tasarruf rozeti için. */
+  separateMonthly?: number;
   highlight?: boolean;
 };
 
@@ -35,28 +59,27 @@ const PACKAGES: Package[] = [
       "Kişiye özel yüz egzersiz programı",
       "Yüz hattı & simetri analizi",
       "Beslenme & su takibi",
+      "Aylık program revizyonu",
       "24/7 WhatsApp destek",
     ],
-    m3: ["Haftalık ölçüm & foto analizi", "Aylık program güncellemesi"],
-    m6: ["Detaylı ilerleme raporu", "Cilt & bakım önerileri"],
-    m12: ["Aylık bire bir görüntülü görüşme", "Ömür boyu program erişimi"],
+    perks: { 12: ["Aylık bire bir görüntülü görüşme"] },
   },
   {
     name: "Yüz + Vücut Paketi",
     monthly: 3480,
+    separateMonthly: 1990 + 2490,
     desc: "Hem yüz hatlarını hem de fiziğini aynı anda dönüştüren bütünsel premium program.",
     base: [
       "Yüz Şekillendirme paketinin tamamı",
       "Vücut paketinin tamamı",
-      "Bütünsel dönüşüm planı",
+      "Bütünsel dönüşüm takvimi",
+      "Aylık program revizyonu",
       "Öncelikli 24/7 destek",
     ],
-    m3: ["Haftalık ölçüm & foto analizi", "Aylık strateji görüşmesi"],
-    m6: ["Detaylı ilerleme raporu", "Takviye & bakım önerileri"],
-    m12: [
-      "Aylık bire bir görüntülü görüşme",
-      "Ömür boyu erişim + VIP destek",
-    ],
+    perks: {
+      6: ["Aylık bire bir görüntülü görüşme"],
+      12: ["Paket odağı değiştirme hakkı (yüz ↔ vücut)"],
+    },
     highlight: true,
   },
   {
@@ -67,23 +90,26 @@ const PACKAGES: Package[] = [
       "Kişiye özel antrenman programı",
       "Hedefe yönelik beslenme planı",
       "Yağ yakımı & kas gelişim takibi",
+      "Aylık program revizyonu",
       "24/7 WhatsApp destek",
     ],
-    m3: ["Haftalık ölçüm & foto analizi", "Takviye (supplement) önerileri"],
-    m6: ["Antrenman video kütüphanesi", "Aylık strateji görüşmesi"],
-    m12: ["Aylık bire bir görüntülü görüşme", "Sezonluk periyodizasyon planı"],
+    perks: { 12: ["Aylık bire bir görüntülü görüşme"] },
   },
 ];
 
 const fmt = (n: number) => new Intl.NumberFormat("tr-TR").format(n) + " ₺";
 
+/** Taahhüt indirimi uygulanmış toplam tutar. */
+const priceFor = (monthly: number, term: Term) =>
+  Math.round((monthly * term.months * (100 - term.pct)) / 100);
+
 function featuresFor(pkg: Package, months: number): string[] {
-  return [
-    ...pkg.base,
-    ...(months >= 3 ? pkg.m3 ?? [] : []),
-    ...(months >= 6 ? pkg.m6 ?? [] : []),
-    ...(months >= 12 ? pkg.m12 ?? [] : []),
-  ];
+  const features = [...pkg.base];
+  for (const t of LADDER_TERMS) {
+    if (months < t) break;
+    features.push(...LADDER[t], ...(pkg.perks?.[t] ?? []));
+  }
+  return features;
 }
 
 export default function Packages() {
@@ -205,8 +231,12 @@ export default function Packages() {
         >
           {PACKAGES.map((pkg) => {
             const base = pkg.monthly * term.months;
-            const price = Math.round((base * (100 - term.pct)) / 100);
+            const price = priceFor(pkg.monthly, term);
             const features = featuresFor(pkg, term.months);
+            const separateTotal = pkg.separateMonthly
+              ? priceFor(pkg.separateMonthly, term)
+              : 0;
+            const savings = separateTotal - price;
 
             return (
               <motion.article
@@ -248,10 +278,22 @@ export default function Packages() {
                   <div className="mt-1 text-sm text-white/50">
                     {term.months === 1 ? "aylık" : `${term.months} ay toplam`}
                   </div>
+                  {savings > 0 && (
+                    <div className="mt-3 rounded-lg border border-brand/25 bg-brand/[0.07] px-3 py-2 text-xs text-white/70">
+                      Ayrı ayrı{" "}
+                      <span className="text-white/45 line-through">
+                        {fmt(separateTotal)}
+                      </span>{" "}
+                      ·{" "}
+                      <span className="font-semibold text-brand">
+                        {fmt(savings)} tasarruf
+                      </span>
+                    </div>
+                  )}
                 </div>
 
                 {/* Features */}
-                <ul className="mt-6 flex flex-col gap-3 border-t border-white/10 pt-6">
+                <ul className="mt-6 flex flex-1 flex-col gap-3 border-t border-white/10 pt-6">
                   {features.map((f) => (
                     <li
                       key={f}

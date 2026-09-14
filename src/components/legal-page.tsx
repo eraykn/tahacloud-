@@ -13,7 +13,7 @@ export type LegalSection = {
   paragraphs?: LegalParagraph[];
   list?: string[];
   terms?: { term: string; def: string }[];
-  subsections?: { code: string; title: string; paragraphs: string[] }[];
+  subsections?: { code: string; title: string; paragraphs: LegalParagraph[] }[];
   note?: { heading: string; paragraphs: string[] };
   danger?: boolean;
 };
@@ -161,11 +161,23 @@ export function LegalPage({
                         <span className="text-brand">{sub.code}</span>{" "}
                         {sub.title}
                       </h3>
-                      {sub.paragraphs.map((p) => (
-                        <p key={p} className="mt-2 leading-relaxed text-white/70">
-                          {p}
-                        </p>
-                      ))}
+                      {sub.paragraphs.map((p, idx) => {
+                        const text = typeof p === "string" ? p : p.text;
+                        const emphasis = typeof p !== "string" && p.emphasis;
+                        return (
+                          <p
+                            key={idx}
+                            className={cn(
+                              "mt-2 leading-relaxed",
+                              emphasis
+                                ? "font-serif italic text-white/85"
+                                : "text-white/70",
+                            )}
+                          >
+                            {text}
+                          </p>
+                        );
+                      })}
                     </div>
                   ))}
                 </div>

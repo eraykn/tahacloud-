@@ -7,7 +7,7 @@ export const SITE = {
   brand: "tahacloud coaching",
   description: "Premium fitness & coaching — train like it matters.",
 
-  email: "iletisim@tahacloud.com",
+  email: "tahacloud@outlook.com",
   phoneDisplay: "+90 541 329 94 80",
   location: "İstanbul, Türkiye",
 

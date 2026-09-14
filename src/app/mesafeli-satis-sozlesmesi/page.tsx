@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SITE } from "@/lib/site";
 import { LegalPage, type LegalSection } from "@/components/legal-page";
 
 export const metadata: Metadata = {
@@ -15,7 +16,7 @@ const SECTIONS: LegalSection[] = [
       "İşbu Sözleşme aşağıdaki taraflar arasında aşağıda belirtilen hüküm ve şartlar çerçevesinde imzalanmıştır.",
     ],
     list: [
-      "SATICI: Taha Bulut, İstanbul, Türkiye, iletisim@tahacloud.com",
+      `SATICI: Taha Berkan Bulut, İstanbul, Türkiye, ${SITE.email}`,
       "ALICI: Sipariş esnasında bilgileri girilecek olan kişidir. İşbu sözleşmeyi kabul etmekle ALICI, sözleşme konusu siparişi onayladığı takdirde sipariş konusu bedeli ve varsa ek ücretleri ödeme yükümlülüğü altına gireceğini kabul eder.",
     ],
   },
@@ -87,6 +88,10 @@ const SECTIONS: LegalSection[] = [
         title: "Sözleşme Feshi",
         paragraphs: [
           "SATICI, ALICININ programa aykırı davrandığının tespiti üzerine sözleşmeyi feshetme hakkına sahiptir. 6 hafta boyunca WhatsApp ya da başka bir iletişim kanalı ile ALICININ, SATICIYLA herhangi bir şekilde iletişime geçmemesi halinde SATICININ derhal fesih hakkı saklıdır.",
+          {
+            text: "İşbu maddede düzenlenen 6 haftalık iletişimsizlik süresi, 9.10 maddesi uyarınca usulüne uygun olarak başlatılmış program dondurma dönemlerinde işlemez. Dondurma dönemi boyunca ALICININ iletişime geçmemesi fesih sebebi sayılmaz.",
+            emphasis: true,
+          },
         ],
       },
       {
@@ -101,6 +106,15 @@ const SECTIONS: LegalSection[] = [
         title: "Başarı Yüzdesi",
         paragraphs: [
           "ALICI'nın, programa uyumunu gösteren aylık başarı yüzdesinin %20'nin altında kalması durumunda hizmet iptal edilebilir, söz konusu bu durum tarafların karşılıklı anlaşması neticesinde gerçekleşecektir.",
+        ],
+      },
+      {
+        code: "9.10",
+        title: "Program Dondurma Hakkı",
+        paragraphs: [
+          "12 aylık taahhütle satın alınan paketlerde ALICI, sözleşme süresi boyunca toplam 2 ayı geçmemek üzere programını dondurma hakkına sahiptir. Dondurma hakkı, en az 1 ay kesintisiz olarak ve yılda en fazla iki kez kullanılabilir.",
+          "Dondurma talebi, dondurmanın başlamasından en az 7 gün önce SATICI'ya yazılı olarak (WhatsApp veya e-posta) bildirilir. Talep bildirimin SATICI tarafından teyit edilmesiyle yürürlüğe girer.",
+          "Dondurma süresi boyunca SATICI'nın program hazırlama, güncelleme ve destek yükümlülükleri askıya alınır; sözleşme süresi dondurulan süre kadar uzar. Dondurma, ALICI'ya ücret iadesi hakkı doğurmaz.",
         ],
       },
     ],

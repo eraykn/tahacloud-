@@ -16,7 +16,7 @@ const SECTIONS: LegalSection[] = [
       "6698 Sayılı Kişisel Verilerin Korunması Kanunu uyarınca veri sorumlusu kimliği aşağıdaki gibidir:",
     ],
     list: [
-      "Ad Soyad: Taha Bulut",
+      "Ad Soyad: Taha Berkan Bulut",
       "Adres: İstanbul, Türkiye",
       `E-posta: ${SITE.email}`,
     ],
